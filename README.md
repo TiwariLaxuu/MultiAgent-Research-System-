@@ -19,3 +19,37 @@ Step 4: Create pipeline.py This is the supervisor.  We will write one function c
 
 Step 5: Run and Test 
 Run python pipeline.py in the terminal, enter a research topic and watch all 4 agents work one by one - search read write review - and print. 
+
+Step 6: Live Dashboard 
+Live dashboard using streamlit.
+
+Project Setup & Installation 
+
+1. Clone the Repository 
+git clone https://github.com/your-username/MultiAgent-Research-System.git
+cd MultiAgent-Research-System 
+
+2. Environment Setup (Using uv) 
+We use uv for fast package management. Ensure your virtual environment is active and all required dependencies are installed:
+uv pip install -r requirements.txt 
+
+3. API Key Configuration
+Add your Groq API key and Tavily API key(free for 1000 request) to your system environment variables or create a .env file in the root folder:
+GROQ_API_KEY="your_groq_api_key_here"
+TAVILY_API_KEY="your tavily_api_key_here"
+
+4. Running the Dashboard (UI Version)
+
+Launch your fancy Streamlit UI engine:
+uv run streamlit run app.py
+
+
+🤝 System Orchestration Flow
+
+Search Agent (Scouting): Initiates deep-web recon using targeted queries to build a preliminary intelligence index.
+
+Reader Agent (Scraping): Evaluates high-yield index sources and extracts comprehensive raw markdown assets.
+
+Writer Chain (Synthesis): Compiles search queries and scraped references into a highly structured technical report.
+
+Critic Chain (Verification): Audits the final draft against strict formatting and structural accuracy guidelines. 
