@@ -18,3 +18,4 @@ LangGraph's state machine handles the loop -- the LLM just responds naturally
 Step 4: Create pipeline.py This is the supervisor.  We will write one function called run_research_pipeline that calls all 4 agents and chains in the correct order and passes results between them using a shared state dictionary. The agent use message-based input/output - we send {"message" : [("user", "....")]} and read the response from result["messages"][-1].content. At the end of each step it will print the output in the terminal so students can see exactly what each agent is doing 
 
 Step 5: Run and Test 
+Run python pipeline.py in the terminal, enter a research topic and watch all 4 agents work one by one - search read write review - and print. 
