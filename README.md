@@ -1,116 +1,460 @@
-🤖 Multi-Agent Research Studio
+# 🤖 Multi-Agent Research Studio
 
-An elevated AI orchestration studio built with Streamlit and LangGraph designed for deep web intelligence gathering, technical compilation, and automated editorial verification.
+An elevated AI orchestration studio built with **Streamlit** and **LangGraph** designed for deep web intelligence gathering, technical compilation, and automated editorial verification.
 
-This system leverages 4 cooperative autonomous agents and chains to scout, scrape, synthesize, and audit comprehensive research dossiers on any given topic.
+This system leverages **4 cooperative autonomous agents** and chained workflows to scout, scrape, synthesize, and audit comprehensive research dossiers on any given topic.
 
-📸 App UI Live Dashboard
+---
 
-Below is the live execution flow of the Multi-Agent Pipeline. The interface features real-time telemetry analytics, a dynamic node status tracker, and an interactive workspace editor.
+# 📸 App UI Live Dashboard
 
-💡 Replace the placeholder image path above (assets/dashboard_screenshot.png) with your actual screenshot file path once saved inside your repository.
+Below is the live execution flow of the Multi-Agent Pipeline. The interface features:
 
-🤝 System Orchestration Flow
+* Real-time telemetry analytics
+* Dynamic node status tracking
+* Interactive workspace editor
+* Multi-agent execution monitoring
+* Glassmorphic UI components
 
+> 💡 Replace the placeholder image path below with your actual screenshot after uploading it into the repository.
+
+```md
+![Dashboard Screenshot](assets/dashboard_screenshot.png)
+```
+
+---
+
+# 🤝 System Orchestration Flow
+
+```text
 [ User Input Topic ]
          │
          ▼
- 1. 🔍 Search Agent (Scouts Tavily API & caches discovery links)
+ 1. 🔍 Search Agent
+    └── Scouts Tavily API & caches discovery links
          │
          ▼
- 2. 📖 Reader Agent (Scrapes high-yield URLs with BeautifulSoup)
+ 2. 📖 Reader Agent
+    └── Scrapes high-yield URLs using BeautifulSoup
          │
          ▼
- 3. ✍️ Writer Chain (Synthesizes raw context into structured Markdown)
+ 3. ✍️ Writer Chain
+    └── Synthesizes raw context into structured Markdown
          │
          ▼
- 4. 🧐 Critic Chain (Audits formatting, layout, and factual citations)
+ 4. 🧐 Critic Chain
+    └── Audits formatting, structure, and factual citations
+```
 
+---
 
-🛠️ Step-by-Step Architecture Guide
+# 🧠 Core Features
 
-Step 1: Environment Setup
+* ⚡ Multi-Agent Research Automation
+* 🌐 Real-Time Web Intelligence Gathering
+* 🧩 LangGraph State-Based Orchestration
+* 🛠️ Custom LangChain Tooling
+* 📄 Automated Markdown Report Generation
+* 🧐 AI Editorial Verification & Critique
+* 📊 Live Agent Telemetry Dashboard
+* 🎨 Modern Streamlit Glassmorphism UI
+* 🔁 Stateful Workflow Memory
+* 📚 Structured Research Compilation
 
-We utilize uv for lightning-fast package management. This isolated environment prevents dependency conflicts and ensures quick installations of deep-learning runtimes.
+---
 
-Step 2: Custom Tool Integrations (tools.py)
+# 🛠️ Step-by-Step Architecture Guide
 
-We build custom tools decorated with LangChain's @tool wrapper:
+---
 
-web_search: Connects directly to the Tavily API to pull up-to-the-minute web indices on our target topic.
+## Step 1 — Environment Setup
 
-scrape_url: Receives a target URL, fetches the document object model (DOM), parses out raw elements via BeautifulSoup, and extracts structural markdown and paragraphs.
+We utilize **uv** for ultra-fast package management and isolated dependency resolution.
 
-Step 3: Core Agents Setup (agents.py)
+This ensures:
 
-This contains the processing layers of our system:
+* Faster installations
+* Clean environments
+* Reduced dependency conflicts
+* Better reproducibility for AI workflows
 
-Search Agent: Built using create_react_agent and AgentExecutor to strategically run searches when queries are complex.
+---
 
-Reader Agent: Built using the same pattern but strictly bound to the scrape_url tool to ingest specific deep page context.
+## Step 2 — Custom Tool Integrations (`tools.py`)
 
-Writer Chain: Implements the modern LCEL (LangChain Expression Language) pipe design pattern:
+We implement custom tools using LangChain’s `@tool` decorator.
 
+### 🔍 `web_search`
 
-$$\text{Prompt} \;\lvert\; \text{LLM} \;\lvert\; \text{StrOutputParser()}$$
+Connects directly to the Tavily API to retrieve up-to-date web intelligence on the requested topic.
 
-Critic Chain: An independent LCEL verification unit that evaluates the compiled report and outputs a diagnostic review score and structured suggestions.
+```python
+@tool
+def web_search(query: str):
+    ...
+```
 
-How the Agent Engine Handles Tool Invocation Under the Hood:
+### 📖 `scrape_url`
 
-Tools are passed as native function definitions directly within the LLM API schemas.
+Receives a target URL, downloads the HTML DOM, parses content using BeautifulSoup, and extracts structured textual context.
 
-The LLM outputs structured, machine-readable JSON arguments (e.g., tool_calls).
+```python
+@tool
+def scrape_url(url: str):
+    ...
+```
 
-LangGraph's engine automatically captures these calls, executes the bound local Python code, and feeds the outputs back into the chat state natively.
+### Tooling Responsibilities
 
-Step 4: The Central Supervisor (pipeline.py)
+| Tool            | Purpose                    |
+| --------------- | -------------------------- |
+| `web_search`    | Discovery & indexing       |
+| `scrape_url`    | Deep content extraction    |
+| `BeautifulSoup` | DOM parsing                |
+| `Tavily API`    | Real-time web intelligence |
 
-The pipeline serves as the state orchestrator. It manages a shared dictionary state, running each agent sequentially and feeding outputs as message-based sequences:
+---
 
-# Sequential state injection example
-search_results = search_agent.invoke({"messages": [("user", "Find info...")]})
-state["search_results"] = search_results['messages'][-1].content
+# 🤖 Step 3 — Core Agents Setup (`agents.py`)
 
+This layer contains the cognitive processing units of the system.
 
-Terminal logging updates the developer on which node is currently processing.
+---
 
-Step 5: Command Line Validation
+## 🔍 Search Agent
 
-Run the programmatic pipeline to verify connection points and verify standard out operations before engaging the UI:
+Built using:
 
+* `create_react_agent`
+* `AgentExecutor`
+
+Responsibilities:
+
+* Intelligent query decomposition
+* Strategic search execution
+* Retrieval prioritization
+* Link discovery caching
+
+---
+
+## 📖 Reader Agent
+
+Focused exclusively on content ingestion and contextual extraction.
+
+Bound directly to:
+
+* `scrape_url`
+* HTML parsing pipelines
+* Context refinement logic
+
+---
+
+## ✍️ Writer Chain
+
+Implements the modern **LCEL (LangChain Expression Language)** pipeline architecture.
+
+```text
+Prompt → LLM → StrOutputParser()
+```
+
+### LCEL Flow
+
+```python
+writer_chain = (
+    prompt
+    | llm
+    | StrOutputParser()
+)
+```
+
+Responsibilities:
+
+* Context synthesis
+* Markdown structuring
+* Technical summarization
+* Long-form report generation
+
+---
+
+## 🧐 Critic Chain
+
+An independent verification unit responsible for auditing generated reports.
+
+### Responsibilities
+
+* Citation verification
+* Formatting inspection
+* Structural consistency checks
+* Hallucination detection
+* Improvement recommendations
+
+### Example Output
+
+```json
+{
+  "score": 9.1,
+  "issues": [],
+  "recommendations": [
+    "Add more citations",
+    "Improve section transitions"
+  ]
+}
+```
+
+---
+
+# ⚙️ How Tool Invocation Works Internally
+
+LangGraph manages autonomous tool execution natively.
+
+## Execution Lifecycle
+
+1. Tools are registered as callable Python functions
+2. The LLM emits structured `tool_calls`
+3. LangGraph intercepts tool requests
+4. Local Python functions execute automatically
+5. Results are injected back into the shared conversation state
+
+---
+
+## Example Internal Tool Call
+
+```json
+{
+  "tool": "web_search",
+  "arguments": {
+    "query": "Latest advancements in AI agents"
+  }
+}
+```
+
+---
+
+# 🧩 Step 4 — Central Supervisor (`pipeline.py`)
+
+The pipeline orchestrates the entire workflow through shared state injection.
+
+---
+
+## Shared State Architecture
+
+```python
+state = {
+    "topic": "",
+    "search_results": [],
+    "documents": [],
+    "draft": "",
+    "critique": ""
+}
+```
+
+---
+
+## Sequential State Injection Example
+
+```python
+search_results = search_agent.invoke({
+    "messages": [("user", "Find information about AI agents")]
+})
+
+state["search_results"] = search_results["messages"][-1].content
+```
+
+---
+
+## Pipeline Responsibilities
+
+* Agent sequencing
+* State persistence
+* Error recovery
+* Telemetry logging
+* Workflow synchronization
+
+---
+
+# 🧪 Step 5 — Command Line Validation
+
+Before launching the UI, validate all pipeline connections programmatically.
+
+```bash
 uv run pipeline.py
+```
 
+This verifies:
 
-Step 6: Interactive Web Interface (app.py)
+* Agent execution
+* API connectivity
+* Tool invocation
+* State transitions
+* Logging outputs
 
-The Streamlit application provides a highly polished dashboard using custom CSS selectors, glassmorphic rendering, and a state-preserved workspace editor.
+---
 
-⚙️ Project Setup & Installation
+# 🖥️ Step 6 — Interactive Web Interface (`app.py`)
 
-1. Clone the Repository
+The Streamlit dashboard delivers a polished orchestration studio experience.
 
+---
+
+## UI Features
+
+* 🌌 Glassmorphic interface
+* 📊 Real-time execution telemetry
+* 🧠 Agent activity monitor
+* 📄 Workspace markdown editor
+* 🔄 Live workflow visualization
+* 🧩 Stateful session management
+
+---
+
+# 📂 Recommended Project Structure
+
+```text
+MultiAgent-Research-Studio/
+│
+├── agents.py
+├── tools.py
+├── pipeline.py
+├── app.py
+├── requirements.txt
+├── .env
+│
+├── assets/
+│   └── dashboard_screenshot.png
+│
+├── outputs/
+│   └── generated_reports/
+│
+└── README.md
+```
+
+---
+
+# ⚙️ Project Setup & Installation
+
+---
+
+## 1️⃣ Clone the Repository
+
+```bash
 git clone https://github.com/your-username/MultiAgent-Research-System.git
+
 cd MultiAgent-Research-System
+```
 
+---
 
-2. Environment Setup (Using uv)
+## 2️⃣ Environment Setup (Using `uv`)
 
-Ensure your virtual environment is active and all required dependencies are installed:
+Install all dependencies:
 
+```bash
 uv pip install -r requirements.txt
+```
 
+---
 
-3. API Key Configuration
+# 🔑 3️⃣ API Key Configuration
 
-Create a .env file in the root directory or export these keys in your active shell:
+Create a `.env` file inside the root directory:
 
-export GROQ_API_KEY="your_groq_api_key_here"
-export TAVILY_API_KEY="your_tavily_api_key_here"
+```env
+GROQ_API_KEY="your_groq_api_key_here"
 
+TAVILY_API_KEY="your_tavily_api_key_here"
+```
 
-4. Run the Streamlit Dashboard
+---
 
-Launch your local web engine:
+# 🚀 4️⃣ Launch the Streamlit Dashboard
 
+```bash
 uv run streamlit run app.py
+```
+
+---
+
+# 📦 Example Dependencies
+
+```txt
+streamlit
+langchain
+langgraph
+langchain-community
+langchain-core
+langchain-groq
+beautifulsoup4
+requests
+python-dotenv
+tavily-python
+```
+
+---
+
+# 🔬 Future Improvements
+
+* 🧠 Long-Term Vector Memory
+* 📚 RAG-based Document Recall
+* 🛰️ Autonomous Research Planning
+* 🔗 Multi-Source Citation Graphs
+* 📈 Research Quality Scoring
+* 🎙️ Voice-Based Research Input
+* 🧪 Multi-LLM Consensus Validation
+* 🗂️ PDF & Arxiv Parsing Pipelines
+* 🧵 Concurrent Agent Execution
+* ☁️ Cloud Deployment Support
+
+---
+
+# 🧠 Tech Stack
+
+| Layer         | Technology    |
+| ------------- | ------------- |
+| Frontend      | Streamlit     |
+| Orchestration | LangGraph     |
+| Agents        | LangChain     |
+| Parsing       | BeautifulSoup |
+| LLM Provider  | Groq          |
+| Search Engine | Tavily        |
+| Environment   | uv            |
+| Language      | Python        |
+
+---
+
+# 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+# 🌟 Acknowledgements
+
+Special thanks to the open-source ecosystem powering modern AI orchestration:
+
+* LangChain
+* LangGraph
+* Streamlit
+* Tavily
+* BeautifulSoup
+* Python OSS Community
+
+---
+
+# ⭐ Support the Project
+
+If you found this project useful:
+
+* ⭐ Star the repository
+* 🍴 Fork the project
+* 🧠 Contribute new agent capabilities
+* 🚀 Share your research workflows
+
+---
+
+# 🧠 Final Vision
+
+The future of research systems lies in:
+
+> Autonomous agents capable of searching, reasoning, validating, and synthesizing knowledge collaboratively.
+
+This project serves as a foundational framework toward building scalable AI research operating systems.
