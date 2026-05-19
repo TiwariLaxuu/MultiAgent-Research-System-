@@ -16,10 +16,9 @@ Below is the live execution flow of the Multi-Agent Pipeline. The interface feat
 * Multi-agent execution monitoring
 * Glassmorphic UI components
 
-> 💡 Replace the placeholder image path below with your actual screenshot after uploading it into the repository.
-
-
+![Dashboard Screenshot](assets/dashboard1.png)
 ![Dashboard Screenshot](assets/dashboard2.png)
+![Dashboard Screenshot](assets/dashboard3.png)
 
 ---
 
