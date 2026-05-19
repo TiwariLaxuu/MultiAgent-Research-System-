@@ -11,4 +11,8 @@ Step 3: Create agents.py This is the heart of the project. We will build 4 thing
 3. Writer Chain using the modern LCEL Pipe syntax - prompt | LLM | StrOutputParser() which takes all the research and writes a full report. 
 4. Crtic Chain again using LCEL Pipe which reads the report and give a score and feedback.
 
+How create_agent() handles it 
+Tools are passed as functions definitions in the API call itself -- the LLM sees them natively. LLM returns structured tool_call objects - no text to parse 
+LangGraph's state machine handles the loop -- the LLM just responds naturally 
+
 Step 4: Create pipeline.py This is the supervisor.  
