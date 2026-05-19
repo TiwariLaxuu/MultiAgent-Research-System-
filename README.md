@@ -1,4 +1,4 @@
-# 🤖 Multi-Agent Research Studio
+# 🤖 Multi-Agent Research System
 
 An elevated AI orchestration studio built with **Streamlit** and **LangGraph** designed for deep web intelligence gathering, technical compilation, and automated editorial verification.
 
