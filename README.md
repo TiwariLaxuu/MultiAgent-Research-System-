@@ -19,7 +19,7 @@ Below is the live execution flow of the Multi-Agent Pipeline. The interface feat
 > 💡 Replace the placeholder image path below with your actual screenshot after uploading it into the repository.
 
 ```md
-![Dashboard Screenshot](assets/dashboard1.png)
+![Dashboard Screenshot](assets/dashboard2.png)
 ```
 
 ---
