@@ -1,55 +1,116 @@
-# MultiAgent-Research-System-
-Used Multiple Tools, Multiple Agents, Pipeline Create, Data Store 
+🤖 Multi-Agent Research Studio
 
-Step 1: Install all the dependencies creating a virtual environment using uv which is very fast and easily accessible, so i prefer this. 
+An elevated AI orchestration studio built with Streamlit and LangGraph designed for deep web intelligence gathering, technical compilation, and automated editorial verification.
 
-Step 2: Create tools.py We will build 2 custom tools using the @tool decorator. First web_search tool which talks to tavily api and fetches live search results from the internet. Second the scrape_url tool which takes a URL, visits that page and extracts clean readable text using BeautifulSoup. Using inspect in the web browser see all the html code, all the text or anything you want to extract it easily from bs4. 
+This system leverages 4 cooperative autonomous agents and chains to scout, scrape, synthesize, and audit comprehensive research dossiers on any given topic.
 
-Step 3: Create agents.py This is the heart of the project. We will build 4 things here. 
-1. Search Agent using create_react_agent + AgentExecutor which will use the web_search tool. 
-2. Reader agent using the same pattern but with the scrape_url tool. 
-3. Writer Chain using the modern LCEL Pipe syntax - prompt | LLM | StrOutputParser() which takes all the research and writes a full report. 
-4. Crtic Chain again using LCEL Pipe which reads the report and give a score and feedback.
+📸 App UI Live Dashboard
 
-How create_agent() handles it 
-Tools are passed as functions definitions in the API call itself -- the LLM sees them natively. LLM returns structured tool_call objects - no text to parse 
-LangGraph's state machine handles the loop -- the LLM just responds naturally 
+Below is the live execution flow of the Multi-Agent Pipeline. The interface features real-time telemetry analytics, a dynamic node status tracker, and an interactive workspace editor.
 
-Step 4: Create pipeline.py This is the supervisor.  We will write one function called run_research_pipeline that calls all 4 agents and chains in the correct order and passes results between them using a shared state dictionary. The agent use message-based input/output - we send {"message" : [("user", "....")]} and read the response from result["messages"][-1].content. At the end of each step it will print the output in the terminal so students can see exactly what each agent is doing 
-
-Step 5: Run and Test 
-Run python pipeline.py in the terminal, enter a research topic and watch all 4 agents work one by one - search read write review - and print. 
-
-Step 6: Live Dashboard 
-Live dashboard using streamlit.
-
-Project Setup & Installation 
-
-1. Clone the Repository 
-git clone https://github.com/your-username/MultiAgent-Research-System.git
-cd MultiAgent-Research-System 
-
-2. Environment Setup (Using uv) 
-We use uv for fast package management. Ensure your virtual environment is active and all required dependencies are installed:
-uv pip install -r requirements.txt 
-
-3. API Key Configuration
-Add your Groq API key and Tavily API key(free for 1000 request) to your system environment variables or create a .env file in the root folder:
-GROQ_API_KEY="your_groq_api_key_here"
-TAVILY_API_KEY="your tavily_api_key_here"
-
-4. Running the Dashboard (UI Version)
-
-Launch your fancy Streamlit UI engine:
-uv run streamlit run app.py
-
+💡 Replace the placeholder image path above (assets/dashboard_screenshot.png) with your actual screenshot file path once saved inside your repository.
 
 🤝 System Orchestration Flow
 
-Search Agent (Scouting): Initiates deep-web recon using targeted queries to build a preliminary intelligence index.
+[ User Input Topic ]
+         │
+         ▼
+ 1. 🔍 Search Agent (Scouts Tavily API & caches discovery links)
+         │
+         ▼
+ 2. 📖 Reader Agent (Scrapes high-yield URLs with BeautifulSoup)
+         │
+         ▼
+ 3. ✍️ Writer Chain (Synthesizes raw context into structured Markdown)
+         │
+         ▼
+ 4. 🧐 Critic Chain (Audits formatting, layout, and factual citations)
 
-Reader Agent (Scraping): Evaluates high-yield index sources and extracts comprehensive raw markdown assets.
 
-Writer Chain (Synthesis): Compiles search queries and scraped references into a highly structured technical report.
+🛠️ Step-by-Step Architecture Guide
 
-Critic Chain (Verification): Audits the final draft against strict formatting and structural accuracy guidelines. 
+Step 1: Environment Setup
+
+We utilize uv for lightning-fast package management. This isolated environment prevents dependency conflicts and ensures quick installations of deep-learning runtimes.
+
+Step 2: Custom Tool Integrations (tools.py)
+
+We build custom tools decorated with LangChain's @tool wrapper:
+
+web_search: Connects directly to the Tavily API to pull up-to-the-minute web indices on our target topic.
+
+scrape_url: Receives a target URL, fetches the document object model (DOM), parses out raw elements via BeautifulSoup, and extracts structural markdown and paragraphs.
+
+Step 3: Core Agents Setup (agents.py)
+
+This contains the processing layers of our system:
+
+Search Agent: Built using create_react_agent and AgentExecutor to strategically run searches when queries are complex.
+
+Reader Agent: Built using the same pattern but strictly bound to the scrape_url tool to ingest specific deep page context.
+
+Writer Chain: Implements the modern LCEL (LangChain Expression Language) pipe design pattern:
+
+
+$$\text{Prompt} \;\lvert\; \text{LLM} \;\lvert\; \text{StrOutputParser()}$$
+
+Critic Chain: An independent LCEL verification unit that evaluates the compiled report and outputs a diagnostic review score and structured suggestions.
+
+How the Agent Engine Handles Tool Invocation Under the Hood:
+
+Tools are passed as native function definitions directly within the LLM API schemas.
+
+The LLM outputs structured, machine-readable JSON arguments (e.g., tool_calls).
+
+LangGraph's engine automatically captures these calls, executes the bound local Python code, and feeds the outputs back into the chat state natively.
+
+Step 4: The Central Supervisor (pipeline.py)
+
+The pipeline serves as the state orchestrator. It manages a shared dictionary state, running each agent sequentially and feeding outputs as message-based sequences:
+
+# Sequential state injection example
+search_results = search_agent.invoke({"messages": [("user", "Find info...")]})
+state["search_results"] = search_results['messages'][-1].content
+
+
+Terminal logging updates the developer on which node is currently processing.
+
+Step 5: Command Line Validation
+
+Run the programmatic pipeline to verify connection points and verify standard out operations before engaging the UI:
+
+uv run pipeline.py
+
+
+Step 6: Interactive Web Interface (app.py)
+
+The Streamlit application provides a highly polished dashboard using custom CSS selectors, glassmorphic rendering, and a state-preserved workspace editor.
+
+⚙️ Project Setup & Installation
+
+1. Clone the Repository
+
+git clone https://github.com/your-username/MultiAgent-Research-System.git
+cd MultiAgent-Research-System
+
+
+2. Environment Setup (Using uv)
+
+Ensure your virtual environment is active and all required dependencies are installed:
+
+uv pip install -r requirements.txt
+
+
+3. API Key Configuration
+
+Create a .env file in the root directory or export these keys in your active shell:
+
+export GROQ_API_KEY="your_groq_api_key_here"
+export TAVILY_API_KEY="your_tavily_api_key_here"
+
+
+4. Run the Streamlit Dashboard
+
+Launch your local web engine:
+
+uv run streamlit run app.py
