@@ -321,7 +321,7 @@ MultiAgent-Research-Studio/
 │   └── dashboard_screenshot.png
 │
 ├── outputs/
-│   └── generated_reports/
+│   └── generated_report.md
 │
 └── README.md
 ```
