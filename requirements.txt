@@ -3,6 +3,8 @@ langchain-core>=0.2.0
 langchain-community>=0.2.0
 langchain-openai>=0.1.0
 
+langchain-groq
+
 # OpenAI 
 openai>=1.30.0
 
@@ -41,4 +43,7 @@ pydantic>=2.5.0
 
 #optional for adavnced parsing / HTML Cleanup 
 html5lib>=1.1.0
+
+#for UI (optional)
+streamlit>=1.20.0
 
