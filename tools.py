@@ -37,6 +37,7 @@ def scrape_web_page(url: str) -> str:
         print(f"Error scraping {url}: {e}")
         return "Error occurred while scraping the web page."
 
+# Unittest 
 result = web_search.invoke("What is the latest research on multi-agent systems?")
 print(result)
 
