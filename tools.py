@@ -38,10 +38,11 @@ def scrape_web_page(url: str) -> str:
         return "Error occurred while scraping the web page."
 
 # Unittest 
-result = web_search.invoke("What is the latest research on multi-agent systems?")
-print(result)
+if __name__ == "__main__":
+    result = web_search.invoke("What is the latest research on multi-agent systems?")
+    print(result)
 
-scrapper_result = scrape_web_page.invoke("https://en.wikipedia.org/wiki/Multi-agent_system")
-print(scrapper_result)
+    scrapper_result = scrape_web_page.invoke("https://en.wikipedia.org/wiki/Multi-agent_system")
+    print(scrapper_result)
 
 
